@@ -1,24 +1,31 @@
-// run `node index.js` in the terminal
-function download() {
-  var url = document.getElementsByName('url')[0].value;
-  var xhr = new XMLHttpRequest();
+const form = document.querySelector('form');
+const input = document.querySelector('input[type="text"]');
+const button = document.querySelector('button[type="submit"]');
 
-  xhr.open('GET', '/download?url=' + url, true);
-  xhr.responseType = 'blob';
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      var blob = xhr.response;
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'audio.mp3';
-      link.click();
-      document.getElementById('result').innerHTML = 'Download completed!';
-    } else {
-      document.getElementById('result').innerHTML =
-        'Error: Unable to download audio.';
+  const url = input.value.trim();
+  if (!url) return;
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/download');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          window.location.href = response.data.url;
+        } else {
+          console.error(response.error);
+        }
+      } else {
+        console.error('Error:', xhr.statusText);
+      }
+      button.disabled = false;
     }
   };
-
-  xhr.send();
-}
+  xhr.send(JSON.stringify({ url }));
+  button.disabled = true;
+});
