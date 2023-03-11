@@ -1,70 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>YouTube Downloader</title>
+    <title>Email Sender</title>
     <style>
       body {
         font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
       }
       h1 {
-        font-size: 36px;
+        text-align: center;
         margin-top: 50px;
         margin-bottom: 30px;
-        text-align: center;
       }
       form {
         width: 500px;
         margin: 0 auto;
-        text-align: center;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #ccc;
       }
-      input[type='text'] {
-        width: 70%;
+      label {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      input[type='text'],
+      textarea {
+        width: 100%;
         padding: 10px;
         font-size: 18px;
-        border-radius: 5px 0 0 5px;
+        border-radius: 5px;
         border: none;
         outline: none;
+        margin-bottom: 20px;
       }
       button[type='submit'] {
-        background-color: #ff4500;
+        background-color: #4caf50;
         color: #fff;
         border: none;
-        border-radius: 0 5px 5px 0;
-        padding: 10px 20px;
-        font-size: 18px;
-        cursor: pointer;
-      }
-      .download-link {
-        margin-top: 30px;
-        text-align: center;
-      }
-      .download-link a {
-        display: inline-block;
-        background-color: #ff4500;
-        color: #fff;
-        text-decoration: none;
-        padding: 10px 20px;
         border-radius: 5px;
+        padding: 10px 20px;
         font-size: 18px;
-        margin-top: 20px;
         cursor: pointer;
+        float: right;
       }
     </style>
   </head>
   <body>
-    <h1>YouTube Downloader</h1>
-    <form id="download-form">
+    <h1>Email Sender</h1>
+    <form id="email-form">
+      <label for="to">To:</label>
       <input
         type="text"
-        id="url-input"
-        placeholder="Enter YouTube video URL"
+        id="to"
+        name="to"
+        placeholder="Enter recipient email"
         required
       />
-      <button type="submit">Download</button>
+
+      <label for="subject">Subject:</label>
+      <input
+        type="text"
+        id="subject"
+        name="subject"
+        placeholder="Enter email subject"
+        required
+      />
+
+      <label for="message">Message:</label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Enter email message"
+        required
+      ></textarea>
+
+      <button type="submit">Send</button>
     </form>
-    <div class="download-link" id="download-link" style="display: none">
-      <a id="download-button" href="#">Download Video</a>
-    </div>
-    <script src="index.js"></script>
+
+    <script src="app.js"></script>
   </body>
 </html>
